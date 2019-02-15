@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html class="full-height" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="referrer" content="never">
+    <title>登录 / 注册</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.css" rel="stylesheet">
+    <link href="/css/home.css" rel="stylesheet">
+    <link href="/css/chat.css" rel="stylesheet">
+    <link href="/css/toastr.css" rel="stylesheet">
+    <style>
+        .intro-2 {
+            background: url()no-repeat center center;
+            background-size: cover;
+        }
+
+        .card {
+            background-color: rgba(229, 228, 255, 0.2);
+        }
+
+        .md-form label {
+            color: #ffffff;
+        }
+
+        h6 {
+            line-height: 1.7;
+        }
+
+        @media (max-width: 740px) {
+            .full-height,
+            .full-height body,
+            .full-height header,
+            .full-height header .view {
+                height: 750px;
+            }
+        }
+
+        @media (min-width: 741px) and (max-height: 638px) {
+            .full-height,
+            .full-height body,
+            .full-height header,
+            .full-height header .view {
+                height: 750px;
+            }
+        }
+
+        .card {
+            margin-top: 30px;
+        }
+
+        .md-form input[type=text]:focus:not([readonly]),
+        .md-form input[type=password]:focus:not([readonly]) {
+            border-bottom: 1px solid #fb5364;
+            box-shadow: 0 1px 0 0 #fb5364;
+        }
+
+        .md-form input[type=text]:focus:not([readonly])+label,
+        .md-form input[type=password]:focus:not([readonly])+label {
+            color: #fb5364;
+        }
+
+        .md-form .form-control {
+            color: #fff;
+        }
+    </style>
+
+</head>
+
+<body class="creative-lp">
+
+<!-- Navigation & Intro -->
+<header id="app">
+
+    <!-- 顶部导航 -->
+    <nav th:replace="~{common :: nav}"></nav>
+
+    <!--Intro Section-->
+    <section class="view intro-2" >
+        <div class="full-bg-img">
+            <div class="mask rgba-indigo-light flex-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-6 col-md-10 col-sm-12 mx-auto mt-lg-5" style=" background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1548426625926&di=a7abc676a56aeb0834923a253e536346&imgtype=0&src=http%3A%2F%2Fwww.chinazoyo.com.cn%2Fuploads%2Fallimg%2F180223%2F0HH92194_0.jpg'); height:370px; width:200px;">
+
+                            <!-- 登录 -->
+                            <div class="card" id="loginDiv">
+                                <div class="card-body">
+                                    <form th:action="@{/login}" method="post">
+
+                                        <!--Header-->
+                                        <div class="form-header pink-gradient">
+                                            <h3> 终于等到你 </h3>
+                                        </div>
+
+                                        <!--Body-->
+                                        <div class="md-form">
+                                            <i class="fa fa-user prefix white-text"></i>
+                                            <input type="text" id="username" name="username" class="form-control">
+                                            <label for="username">账号</label>
+                                        </div>
+
+                                        <div class="md-form">
+                                            <i class="fa fa-lock prefix white-text"></i>
+                                            <input type="password" id="password" name="password" class="form-control">
+                                            <label for="password">密码</label>
+                                        </div>
+
+                                        <div class="text-center my-4">
+                                            <button class="btn pink-gradient px-5" type="submit">登录</button>
+                                            <button class="btn pink-gradient px-5" type="button" @click="onSignInClick">注册</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                            <!--/登录-->
+
+                            <!-- 注册 -->
+                            <div class="card" style="display: none" id="signInDiv">
+                                <div class="card-body">
+
+                                    <!--Header-->
+                                    <div class="form-header pink-gradient">
+                                        <h3> 加入组织 </h3>
+                                    </div>
+
+                                    <!--Body-->
+                                    <div class="md-form">
+                                        <i class="fa fa-user prefix white-text"></i>
+                                        <input type="text" id="sign-username" class="form-control">
+                                        <label for="sign-username">账号</label>
+                                    </div>
+
+                                    <div class="md-form">
+                                        <i class="fa fa-lock prefix white-text"></i>
+                                        <input type="password" id="sign-password" class="form-control">
+                                        <label for="sign-password">密码</label>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="md-form">
+                                        <i class="fa fa-user prefix white-text"></i>
+                                        <input type="text" id="nickname" class="form-control">
+                                        <label for="nickname">昵称</label>
+                                    </div>
+
+                                    <div class="text-center my-4">
+                                        <button class="btn pink-gradient" @click="onRegisterClick">确定注册</button>
+                                        <button class="btn pink-gradient" @click="onLoginClick">返回登录</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- /注册 -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</header>
+<!-- Navigation & Intro -->
+
+<!-- JQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    //Animation init
+    new WOW().init();
+
+</script>
+
+<script>
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: ""
+        },
+        methods: {
+            onSignInClick: function (){
+                $("#sign-username").val('');
+                $("#sign-password").val('');
+                $("#nickname").val('');
+                $("#loginDiv").hide(200);
+                $("#signInDiv").show(300);
+            },
+            onLoginClick: function (){
+                $("#username").val('');
+                $("#password").val('');
+                $("#signInDiv").hide(300);
+                $("#loginDiv").show(300);
+            },
+            onRegisterClick: function () {
+                var username = $("#sign-username").val();
+                var password = $("#sign-password").val();
+                var nickname = $("#nickname").val();
+                if(username.trim().length === 0){
+                    toastr.error("用户名不能为空 !");
+                    return;
+                }
+
+                if(password.trim().length === 0){
+                    toastr.error("密码不能为空 !");
+                    return;
+                }
+
+                if(nickname.trim().length === 0){
+                    toastr.error("昵称不能为空 !");
+                    return;
+                }
+
+                $.post("/api/register",
+                    {
+                        "username": username,
+                        "password": password,
+                        "nickname": nickname
+                    },
+                    function (data) {
+                        if (data.code === 0){
+                            toastr.success("注册成功 ！");
+                            $("#signInDiv").hide(300);
+                            $("#loginDiv").show(300);
+                        }else{
+                            toastr.error("注册失败：" + data.data);
+                        }
+                    }
+                );
+            }
+        }
+    })
+
+</script>
+<script>
+    ! function () {
+        function o(w, v, i) {
+            return w.getAttribute(v) || i
+        }
+
+        function j(i) {
+            return document.getElementsByTagName(i)
+        }
+
+        function l() {
+            var i = j("script"),
+                w = i.length,
+                v = i[w - 1];
+            return {
+                l: w,
+                z: o(v, "zIndex", -1),
+                o: o(v, "opacity", 0.5),
+                c: o(v, "color", "0,0,0"),
+                n: o(v, "count", 99)
+            }
+        }
+
+        function k() {
+            r = u.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, n = u.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+        }
+
+        function b() {
+            e.clearRect(0, 0, r, n);
+            var w = [f].concat(t);
+            var x, v, A, B, z, y;
+            t.forEach(function (i) {
+                i.x += i.xa, i.y += i.ya, i.xa *= i.x > r || i.x < 0 ? -1 : 1, i.ya *= i.y > n || i.y < 0 ? -1 : 1, e.fillRect(i.x - 0.5, i.y - 0.5, 1, 1);
+                for (v = 0; v < w.length; v++) {
+                    x = w[v];
+                    if (i !== x && null !== x.x && null !== x.y) {
+                        B = i.x - x.x, z = i.y - x.y, y = B * B + z * z;
+                        y < x.max && (x === f && y >= x.max / 2 && (i.x -= 0.03 * B, i.y -= 0.03 * z), A = (x.max - y) / x.max, e.beginPath(), e.lineWidth = A / 2, e.strokeStyle = "rgba(" + s.c + "," + (A + 0.2) + ")", e.moveTo(i.x, i.y), e.lineTo(x.x, x.y), e.stroke())
+                    }
+                }
+                w.splice(w.indexOf(i), 1)
+            }), m(b)
+        }
+        var u = document.createElement("canvas"),
+            s = l(),
+            c = "c_n" + s.l,
+            e = u.getContext("2d"),
+            r, n, m = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (i) {
+                window.setTimeout(i, 1000 / 45)
+            },
+            a = Math.random,
+            f = {
+                x: null,
+                y: null,
+                max: 20000
+            };
+        u.id = c;
+        u.style.cssText = "position:fixed;top:0;left:0;z-index:" + s.z + ";opacity:" + s.o;
+        j("body")[0].appendChild(u);
+        k(), window.onresize = k;
+        window.onmousemove = function (i) {
+            i = i || window.event, f.x = i.clientX, f.y = i.clientY
+        }, window.onmouseout = function () {
+            f.x = null, f.y = null
+        };
+        for (var t = [], p = 0; s.n > p; p++) {
+            var h = a() * r,
+                g = a() * n,
+                q = 2 * a() - 1,
+                d = 2 * a() - 1;
+            t.push({
+                x: h,
+                y: g,
+                xa: q,
+                ya: d,
+                max: 6000
+            })
+        }
+        setTimeout(function () {
+            b()
+        }, 100)
+    }();
+</script>
+
+</body>
+
+</html>

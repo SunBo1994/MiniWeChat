@@ -1,0 +1,57 @@
+{
+  "groups": [
+    {
+      "name": "jianshu",
+      "type": "com.anoyi.config.JianshuConfig",
+      "sourceType": "com.anoyi.config.JianshuConfig"
+    },
+    {
+      "name": "custom",
+      "type": "com.anoyi.config.CustomAttributesConfig",
+      "sourceType": "com.anoyi.config.CustomAttributesConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "jianshu.user-id",
+      "type": "java.lang.String",
+      "sourceType": "com.anoyi.config.JianshuConfig",
+      "defaultValue": "7b7ec6f2db21"
+    },
+    {
+      "name": "custom.github-url",
+      "type": "java.lang.String",
+      "sourceType": "com.anoyi.config.CustomAttributesConfig"
+    },
+    {
+      "name": "custom.gitlab-url",
+      "type": "java.lang.String",
+      "sourceType": "com.anoyi.config.CustomAttributesConfig"
+    },
+    {
+      "name": "custom.qq",
+      "type": "java.lang.String",
+      "sourceType": "com.anoyi.config.CustomAttributesConfig"
+    },
+    {
+      "name": "custom.icp",
+      "type": "java.lang.String",
+      "sourceType": "com.anoyi.config.CustomAttributesConfig"
+    },
+    {
+      "name": "custom.reward-images",
+      "type": "java.util.List",
+      "sourceType": "com.anoyi.config.CustomAttributesConfig"
+    },
+    {
+      "name": "custom.reward-desc",
+      "type": "java.lang.String",
+      "sourceType": "com.anoyi.config.CustomAttributesConfig"
+    },
+    {
+      "name": "custom.secret",
+      "type": "java.lang.String",
+      "sourceType": "com.anoyi.config.CustomAttributesConfig"
+    }
+  ]
+}

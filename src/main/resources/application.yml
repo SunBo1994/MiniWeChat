@@ -1,6 +1,9 @@
 # 基本配置
 server:
   port: 8080
+  servlet:
+    session:
+      timeout: 60M
 
 
 spring:
@@ -12,6 +15,6 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%15.15t] %-40.40c{1.} [%X{user}] : %m%n%xwEx"
 
-# 简书配置
-jianshu:
-  user-id: 7b7ec6f2db21
+## 简书配置
+#jianshu:
+#  user-id: 7b7ec6f2db21

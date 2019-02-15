@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- 顶部导航 -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top scrolling-navbar white" th:fragment="nav">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold title" href="/">欢迎来到王者峡谷</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-align-justify" aria-hidden="true"></i>
+        </button>
+            <ul class="navbar-nav nav-flex-icons">
+                <li class="nav-item ml-3" th:unless="${#httpServletRequest.remoteUser}">
+                    <a class="btn pink-gradient btn-rounded btn-sm font-weight-bold" href="/login" data-offset="90">登录/注册</a>
+                </li>
+
+                <li class="nav-item ml-3" th:if="${#httpServletRequest.remoteUser}">
+                    <a class="btn pink-gradient btn-rounded btn-sm font-weight-bold" href="/logout"
+                       data-offset="90">退出登录</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>
