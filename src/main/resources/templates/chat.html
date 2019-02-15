@@ -60,10 +60,12 @@
                                 <div class="m-message" id="chatrecord">
                                     <!-- 聊天记录 -->
                                     <ul>
-                                        <li v-for="message in currentMessages">
-                                            <p class="time"><span class="messageTime">{{ message.time }}</span></p>
+                                        <li v-for="(message,index) in currentMessages">
+                                            <p class="time" v-if="index % 5 == 0"><span class="messageTime">{{ message.time }}</span></p>
                                             <div v-bind:class="message.me ? 'messageContent self text-right' : 'messageContent text-left'">
                                                 <img class="avatar" width="30" height="30" v-bind:src="message.avatar">
+                                                <span v-if="message.me === false"><font size="1">{{ message.nickname }}</font> </span>
+                                                <br v-if="message.me === false">
                                                 <div class="text">
                                                     {{ message.content }}
                                                 </div>
@@ -217,7 +219,6 @@
                     this.sessions[this.currentSessionId].messages = [];
                     searchChatRecord(friendId);
                 }else if ( friendId === "IM_ALL"){
-                    console.log("ALL");
                     this.sessions[this.currentSessionId].messages = [];
                     searchChatRecord("IM_ALL");
                 }
@@ -450,7 +451,6 @@
 
         // 发送消息
         document.onkeydown = function (t) {
-            console.log("13 === t.keyCode"+t.keyCode);
             if (13 === t.keyCode) {
                 if (app.messageInput.trim().length > 0){
                     stompClient.send("/app/chat", {}, app.sendMessage);

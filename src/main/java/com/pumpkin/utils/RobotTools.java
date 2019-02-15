@@ -13,7 +13,8 @@ import java.util.List;
  * @Version 1.0
  */
 public class RobotTools {
-    private final static String KEY = "5d2d5799befb4c46a62d8abb39f1d448";
+    private final static String KEY_1 = "5d2d5799befb4c46a62d8abb39f1d448";
+    private final static String KEY_2 = "ad3fb0d1baee48ca9196cd69d793f0d7";
 
     private final static String SECRET = "288ef3d5df1634c2";
 
@@ -56,7 +57,7 @@ public class RobotTools {
                 "        },\n" +
                 "    },\n" +
                 "    \"userInfo\": {\n" +
-                "        \"apiKey\": \""+KEY+"\",\n" +
+                "        \"apiKey\": \""+KEY_1+"\",\n" +
                 "        \"userId\": \""+userId+"\"\n" +
                 "    }\n" +
                 "}");
