@@ -44,9 +44,14 @@ public class UserDao {
     }
 
     public List<UserBean> findTop10ByUsernameLikeOrNicknameLike(String keywords){
-        BasicQuery query = new BasicQuery("{$or:[{username:'" + keywords + "'},{nickname:'" + keywords + "'}]}");
+        BasicQuery query = new BasicQuery("{$or:[{username:{$regex:'^" + keywords + "'}},{nickname:{$regex:'^" + keywords + "'}}]}");
         query.setSortObject(Document.parse("{username:1}"));
         query.limit(10);
+        return template.find(query,UserBean.class,"user_detail");
+    }
+
+    public List<UserBean> findUserByUsername(List<String> usernameList){
+        Query query = new Query(Criteria.where("username").in(usernameList));
         return template.find(query,UserBean.class,"user_detail");
     }
 

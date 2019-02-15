@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 public class UserService {
     /** 验证用户密码是否符合规则的正则 */
     private static final String PASSWORD_RULE = "^(\\w){6,20}$";
+    private static final String USERNAME_RULE = "/^[^\\u4e00-\\u9fa5]+$/";
 
     private UserDao userDao;
 
@@ -46,8 +47,10 @@ public class UserService {
     private void paramsCheck(UserBean userBean) {
         log.info("paramsCheck:" + userBean.toString());
         String username = userBean.getUsername();
-        UserBean result = getByUsername(username);
-        if (result != null) {
+        if (!Pattern.compile(USERNAME_RULE).matcher(username).matches()){
+            throw new RuntimeException("用户不能包含中文字符");
+        }
+        if ("IM_ALL".equals(userBean.getUsername()) || getByUsername(username) != null) {
             throw new RuntimeException("用户已存在");
         }
         String password = userBean.getPassword();
@@ -83,6 +86,10 @@ public class UserService {
      */
     public List<UserBean> searchUser(String keywords){
         return userDao.findTop10ByUsernameLikeOrNicknameLike(keywords);
+    }
+
+    public List<UserBean> searchUserByAll(List<String> usernameList){
+        return userDao.findUserByUsername(usernameList);
     }
 
     public List<UserBean> findOnlineUsers(String username){

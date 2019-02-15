@@ -88,10 +88,16 @@
                                         <div class="m-list" style="overflow-y: scroll; height: 370px;">
                                             <!-- 在线列表 -->
                                             <ul style="color: #fff">
+                                                <li v-if="searchUsers.length!=0">查询结果</li>
+                                                <li v-for="searchUser in searchUsers" class="text-left">
+                                                    <img class="avatar d-inline" width="30" height="30" v-bind:src="searchUser.avatar"/>
+                                                    <p class="name">{{ searchUser.nickname }}</p>
+                                                    <button class="friend-add" @click="addFriend(searchUser)"> 添加 </button>
+                                                </li>
+                                                <li style="align-content: start"><font color="GREEN">在线({{onlineUsers.length}})</font></li>
                                                 <li v-for="onlineUser in onlineUsers" class="text-left">
                                                     <img class="avatar d-inline" width="30" height="30" v-bind:src="onlineUser.avatar"/>
                                                     <p class="name">{{ onlineUser.nickname }}</p>
-                                                    <button class="friend-add" @click="addFriend(onlineUser)"> 添加 </button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -184,7 +190,8 @@
                     messages: []
                 }
             ],
-            onlineUsers: []         //当前在线用户
+            onlineUsers: [],         //当前在线用户
+            searchUsers: []         //当前在线用户
         },
 
         // mounted () {
@@ -206,9 +213,13 @@
                 this.currentSessionId = sessionId;
                 this.sessions[this.currentSessionId].num = 0;
                 var friendId = this.sessions[this.currentSessionId].user.username;
-                if (friendId !== "IM_ROBOT" || friendId !== "IM_ALL"){
+                if (friendId !== "IM_ROBOT" && friendId !== "IM_ALL"){
                     this.sessions[this.currentSessionId].messages = [];
                     searchChatRecord(friendId);
+                }else if ( friendId === "IM_ALL"){
+                    console.log("ALL");
+                    this.sessions[this.currentSessionId].messages = [];
+                    searchChatRecord("IM_ALL");
                 }
             },
             //显示弹出框
@@ -253,7 +264,7 @@
                                     list.push(onlineList[i]);
                                 }
                             }
-                            app.onlineUsers = list;
+                            app.searchUsers = list;
                         }
                     }
                 );
@@ -363,19 +374,7 @@
             if (response.code === 0){
                 var onlineList = response.data;
                 for(var i = 0; i < onlineList.length; i++){
-                    var exist = false;
-                    if(onlineList[i].username === app.user.username){
-                        exist = true;
-                    }else{
-                        for (var j = 0; j < app.sessions.length; j++){
-                            if (onlineList[i].username === app.sessions[j].user.username){
-                                exist = true;
-                            }
-                        }
-                    }
-                    if (!exist){
-                        list.push(onlineList[i]);
-                    }
+                    list.push(onlineList[i]);
                 }
                 app.onlineUsers = list;
             }
@@ -401,7 +400,6 @@
      * 查找聊天记录
      */
     function searchChatRecord(friendId){
-        console.log("friendId"+friendId);
         $.post("/app/getRecord/",
             {
                 friendId : friendId
@@ -414,7 +412,7 @@
                             nickname: chatMessageList[i].nickname,
                             username: chatMessageList[i].username,
                             avatar: chatMessageList[i].avatar,
-                            me: chatMessageList[i].username !== friendId,
+                            me: chatMessageList[i].username === app.user.username,
                             content: chatMessageList[i].content,
                             time: chatMessageList[i].sendTime
                         };

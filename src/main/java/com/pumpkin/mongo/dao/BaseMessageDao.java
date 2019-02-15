@@ -30,4 +30,10 @@ public class BaseMessageDao {
         query.setSortObject(Document.parse("{timestamp:-1}"));
         return template.find(query,BaseMessage.class,"base_message");
     }
+
+    public List<BaseMessage> search(String me){
+        BasicQuery query = new BasicQuery("{receiver:'IM_ALL'}");
+        query.setSortObject(Document.parse("{timestamp:-1}"));
+        return template.find(query,BaseMessage.class,"base_message");
+    }
 }

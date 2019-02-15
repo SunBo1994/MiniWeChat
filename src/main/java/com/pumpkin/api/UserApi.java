@@ -8,9 +8,11 @@ import com.pumpkin.mongo.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -78,6 +80,9 @@ public class UserApi {
 
     @PostMapping(value = "/common/user")
     public ResponseBean searchUser(@RequestParam String keyword){
+        if (StringUtils.isEmpty(keyword)){
+            return ResponseBean.success(new ArrayList<>());
+        }
         List<UserBean> userBeans = userService.searchUser(keyword);
         return ResponseBean.success(userBeans);
     }
