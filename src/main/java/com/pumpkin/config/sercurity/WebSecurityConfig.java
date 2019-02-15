@@ -35,6 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().rememberMe().alwaysRemember(true)
                 /** 登出验证 */
                 .and().logout().permitAll()
+                /** 设置登陆失效时跳转页面 */
+                .and().sessionManagement().invalidSessionUrl("/login")
                 //TODO 不知道啥意思
                 .and().csrf().disable();
     }

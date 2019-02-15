@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 抛出错误前，打印错误日志
-     * **/
+     **/
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseBean handleException(Exception exception){

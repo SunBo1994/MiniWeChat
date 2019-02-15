@@ -5,7 +5,11 @@ import lombok.AllArgsConstructor;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 /**
@@ -34,5 +38,28 @@ public class UserDao {
         return template.findOne(query, UserBean.class, "user_detail");
     }
 
-//    public List<Document> findTop10ByUsernameLikeOrNicknameLike
+    public List<UserBean> findFriends(List<String> friendNameList){
+        Query query = new Query(Criteria.where("username").in(friendNameList));
+        return template.find(query,UserBean.class,"user_detail");
+    }
+
+    public List<UserBean> findTop10ByUsernameLikeOrNicknameLike(String keywords){
+        BasicQuery query = new BasicQuery("{$or:[{username:'" + keywords + "'},{nickname:'" + keywords + "'}]}");
+        query.setSortObject(Document.parse("{username:1}"));
+        query.limit(10);
+        return template.find(query,UserBean.class,"user_detail");
+    }
+
+    public List<UserBean> findOnlineUser(String username){
+        BasicQuery query = new BasicQuery("{username:{$ne:'" + username + "'}}");
+        return template.find(query ,UserBean.class,"user_online");
+    }
+
+    public void addOnline(UserBean userBean){
+        template.save(userBean,"user_online");
+    }
+
+    public void removeOnline(UserBean userBean){
+        template.remove(userBean,"user_online");
+    }
 }

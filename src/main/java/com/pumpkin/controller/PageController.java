@@ -1,15 +1,16 @@
 package com.pumpkin.controller;
 
-import com.pumpkin.bean.NetworkLink;
+import com.pumpkin.chat.service.ChatService;
 import com.pumpkin.mongo.dao.NetworkLinkDao;
+import com.pumpkin.mongo.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
+import java.security.Principal;
+
 
 /**
  * @ClassName PageController
@@ -22,12 +23,19 @@ import java.util.List;
 @AllArgsConstructor
 public class PageController {
     private final NetworkLinkDao networkLinkDao;
+    private final ChatService chatService;
+    private final UserService userService;
 
+//    @GetMapping("/")
+//    public String index(Model model) {
+////        List<NetworkLink> links = networkLinkDao.findAll();
+////        model.addAttribute("links", links);
+//
+//        return "chat";
+//    }
     @GetMapping("/")
-    public String index(Model model) {
-        List<NetworkLink> links = networkLinkDao.findAll();
-        model.addAttribute("links", links);
-        return "home";
+    public String index(@AuthenticationPrincipal Principal principal) {
+        return "redirect:/app/chat";
     }
 
     @GetMapping("/login")
