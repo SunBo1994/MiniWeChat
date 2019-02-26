@@ -42,8 +42,9 @@ public class RobotTools {
 
     private static Document packageParams(String username, String content){
         String userId = username.hashCode()+"";
+        userId = userId.replace("-","");
         if (userId.length() < 32){
-            for (int i = userId.length();userId.length()==32;i++){
+            for (int i = userId.length();i!=32;i++){
                 userId = "0"+userId;
             }
         }else {

@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public class UserService {
     /** 验证用户密码是否符合规则的正则 */
     private static final String PASSWORD_RULE = "^(\\w){6,20}$";
-    private static final String USERNAME_RULE = "/^[^\\u4e00-\\u9fa5]+$/";
+    private static final String USERNAME_RULE = "^[\\x01-\\x7f]*$";
 
     private UserDao userDao;
 

@@ -14,7 +14,9 @@ spring:
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%15.15t] %-40.40c{1.} [%X{user}] : %m%n%xwEx"
-
+  level:
+    root: info
+  file: logs/im.log
 ## 简书配置
 #jianshu:
 #  user-id: 7b7ec6f2db21
