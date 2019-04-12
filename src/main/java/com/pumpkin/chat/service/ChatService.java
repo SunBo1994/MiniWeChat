@@ -134,6 +134,19 @@ public class ChatService {
     }
 
     public List<ChatMessage> getChatRecord(String me,String friendId){
+        if ("IM_ALL".equals(friendId)) {
+            return getChatRecordByAll(me);
+        }
+        return getChatRecordByMeAndFriend(me, friendId);
+    }
+
+    /**
+     * 获取好友聊天记录
+     * @param me
+     * @param friendId
+     * @return
+     */
+    private List<ChatMessage> getChatRecordByMeAndFriend(String me,String friendId){
         UserBean user = userService.getByUsername(me);
         UserBean friend = userService.getByUsername(friendId);
         List<BaseMessage> baseMessageList = baseMessageDao.search(me, friendId);
@@ -152,6 +165,36 @@ public class ChatService {
         return chatMessageList;
     }
 
+    private List<ChatMessage> getChatRecordByAll(String me){
+        UserBean user = userService.getByUsername(me);
+        List<BaseMessage> baseMessageList = baseMessageDao.search(me);
+        Map<String, UserBean> userBeanMap = getMap(baseMessageList);
+        Collections.sort(baseMessageList);
+        List<ChatMessage> chatMessageList = new ArrayList<>();
+        for (BaseMessage baseMessage : baseMessageList) {
+            ChatMessage chatMessage = new ChatMessage();
+            //消息发送人
+            chatMessage.setUsername(baseMessage.getSender());
+            packageChatMessage(chatMessage,user,userBeanMap);
+            //消息内容
+            chatMessage.setContent(baseMessage.getContent());
+            chatMessage.setSendTime(packageChatMessage(baseMessage.getTimestamp()));
+            chatMessageList.add(chatMessage);
+        }
+        return chatMessageList;
+    }
+
+    private void packageChatMessage(ChatMessage chatMessage,UserBean user,Map<String,UserBean> userBeanMap){
+        UserBean userBean;
+        if (chatMessage.getUsername().equals(user.getUsername())){
+            userBean = user;
+        }else {
+            userBean = userBeanMap.get(chatMessage.getUsername());
+        }
+        chatMessage.setAvatar(userBean.getAvatar());
+        chatMessage.setNickname(userBean.getNickname());
+    }
+
     private void packageChatMessage(ChatMessage chatMessage,UserBean user,UserBean friend){
         UserBean userBean;
         if (chatMessage.getUsername().equals(user.getUsername())){
@@ -161,5 +204,18 @@ public class ChatService {
         }
         chatMessage.setAvatar(userBean.getAvatar());
         chatMessage.setNickname(userBean.getNickname());
+    }
+
+    private Map<String,UserBean> getMap(List<BaseMessage> baseMessageList){
+        Map<String,UserBean> userMap = new HashMap<>();
+        List<String> usernameList = new ArrayList<>();
+        for (BaseMessage baseMessage : baseMessageList) {
+            usernameList.add(baseMessage.getSender());
+        }
+        List<UserBean> userBeans = userService.searchUserByAll(usernameList);
+        for (UserBean userBean : userBeans) {
+            userMap.put(userBean.getUsername(),userBean);
+        }
+        return userMap;
     }
 }
